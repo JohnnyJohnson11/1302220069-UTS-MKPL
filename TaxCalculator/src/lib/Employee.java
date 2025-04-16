@@ -30,6 +30,12 @@ public class FamilyInfo {
     }
 }
 
+public enum Gender {
+    MALE,
+    FEMALE
+}
+
+
 public class Employee {
 
 	private String employeeId;
@@ -44,7 +50,7 @@ public class Employee {
 	private int monthWorkingInYear;
 	
 	private boolean isForeigner;
-	private boolean gender; //true = Laki-laki, false = Perempuan
+	private Gender gender;
 	
 	private int monthlySalary;
 	private int otherMonthlyIncome;
@@ -52,7 +58,7 @@ public class Employee {
 	
 	private FamilyInfo familyInfo = new FamilyInfo();
 	
-	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean gender) {
+	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, Gender gender) {
 		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.lastName = lastName;
