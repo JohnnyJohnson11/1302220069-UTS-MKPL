@@ -1,5 +1,32 @@
 package lib;
 
+public class TaxData {
+    private int monthlySalary;
+    private int otherMonthlyIncome;
+    private int monthsWorked;
+    private int deductible;
+    private boolean isMarried;
+    private int numberOfChildren;
+
+    // Constructor
+    public TaxData(int monthlySalary, int otherMonthlyIncome, int monthsWorked, int deductible, boolean isMarried, int numberOfChildren) {
+        this.monthlySalary = monthlySalary;
+        this.otherMonthlyIncome = otherMonthlyIncome;
+        this.monthsWorked = monthsWorked;
+        this.deductible = deductible;
+        this.isMarried = isMarried;
+        this.numberOfChildren = numberOfChildren;
+    }
+
+    // Getter (tambahkan kalau perlu setter juga)
+    public int getMonthlySalary() { return monthlySalary; }
+    public int getOtherMonthlyIncome() { return otherMonthlyIncome; }
+    public int getMonthsWorked() { return monthsWorked; }
+    public int getDeductible() { return deductible; }
+    public boolean isMarried() { return isMarried; }
+    public int getNumberOfChildren() { return numberOfChildren; }
+}
+
 public class TaxFunction {
 
 	
@@ -15,30 +42,36 @@ public class TaxFunction {
 	 */
 	
 	
-	public static int calculateTax(int monthlySalary, int otherMonthlyIncome, int numberOfMonthWorking, int deductible, boolean isMarried, int numberOfChildren) {
-		
+	public static int calculateTax(TaxData data) {
 		int tax = 0;
-		
+
+		int numberOfMonthWorking = data.getMonthsWorked();
+		int monthlySalary = data.getMonthlySalary();
+		int otherMonthlyIncome = data.getOtherMonthlyIncome();
+		int deductible = data.getDeductible();
+		boolean isMarried = data.isMarried();
+		int numberOfChildren = data.getNumberOfChildren();
+
 		if (numberOfMonthWorking > 12) {
-			System.err.println("More than 12 month working per year");
+			System.err.println("More than 12 months working per year");
 		}
-		
+
 		if (numberOfChildren > 3) {
 			numberOfChildren = 3;
 		}
-		
+
+		int nonTaxableIncome = 54000000;
 		if (isMarried) {
-			tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - (54000000 + 4500000 + (numberOfChildren * 1500000))));
-		}else {
-			tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - 54000000));
+			nonTaxableIncome += 4500000 + (numberOfChildren * 1500000);
 		}
-		
-		if (tax < 0) {
-			return 0;
-		}else {
-			return tax;
-		}
-			 
+
+		double taxableIncome = (monthlySalary + otherMonthlyIncome) * numberOfMonthWorking - deductible - nonTaxableIncome;
+		tax = (int) Math.round(0.05 * taxableIncome);
+
+		return Math.max(tax, 0);
 	}
-	
+
+		
 }
+
+//Test
