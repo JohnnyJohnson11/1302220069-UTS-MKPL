@@ -5,6 +5,31 @@ import java.time.Month;
 import java.util.LinkedList;
 import java.util.List;
 
+public class FamilyInfo {
+    private String spouseName;
+    private String spouseIdNumber;
+    private List<String> childNames = new LinkedList<>();
+    private List<String> childIdNumbers = new LinkedList<>();
+
+    public void setSpouse(String name, String id) {
+        this.spouseName = name;
+        this.spouseIdNumber = id;
+    }
+
+    public void addChild(String name, String id) {
+        childNames.add(name);
+        childIdNumbers.add(id);
+    }
+
+    public boolean isMarried() {
+        return spouseIdNumber != null && !spouseIdNumber.isEmpty();
+    }
+
+    public int getNumberOfChildren() {
+        return familyInfo.getNumberOfChildren();
+    }
+}
+
 public class Employee {
 
 	private String employeeId;
@@ -25,11 +50,7 @@ public class Employee {
 	private int otherMonthlyIncome;
 	private int annualDeductible;
 	
-	private String spouseName;
-	private String spouseIdNumber;
-
-	private List<String> childNames;
-	private List<String> childIdNumbers;
+	private FamilyInfo familyInfo = new FamilyInfo();
 	
 	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean gender) {
 		this.employeeId = employeeId;
@@ -79,14 +100,12 @@ public class Employee {
 		this.otherMonthlyIncome = income;
 	}
 	
-	public void setSpouse(String spouseName, String spouseIdNumber) {
-		this.spouseName = spouseName;
-		this.spouseIdNumber = idNumber;
+	public void setSpouse(String name, String id) {
+		familyInfo.setSpouse(name, id);
 	}
-	
-	public void addChild(String childName, String childIdNumber) {
-		childNames.add(childName);
-		childIdNumbers.add(childIdNumber);
+
+	public void addChild(String name, String id) {
+		familyInfo.addChild(name, id);
 	}
 	
 	public int getAnnualIncomeTax() {
@@ -105,7 +124,7 @@ public class Employee {
 			otherMonthlyIncome,
 			monthWorkingInYear,
 			annualDeductible,
-			!spouseIdNumber.equals(""),
+			familyInfo.isMarried(),
 			childIdNumbers.size()
 		);
 
